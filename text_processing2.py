@@ -94,13 +94,13 @@ def to_camel_case(underscore_str):
             >>> tp2.to_camel_case(underscore_str3)
             "alreadyCamel"
     """
+    camelcase_str = ''
     cnt = 0
     for i in underscore_str :
         if i == '_':
             cnt += 1
     if cnt == 0 :
         return underscore_str
-    camelcase_str = ''
     idx = 0
     before_underscore = False
     for i in range(len(underscore_str)) :

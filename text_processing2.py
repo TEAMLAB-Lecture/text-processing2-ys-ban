@@ -100,6 +100,9 @@ def to_camel_case(underscore_str):
         if i == '_':
             cnt += 1
     if cnt == 0 :
+        if len(underscore_str)>0 :
+            if is_upper(underscore_str[0]) :
+                underscore_str = chr(ord(underscore_str[0])+32) + underscore_str[1:]
         return underscore_str
     idx = 0
     before_underscore = False

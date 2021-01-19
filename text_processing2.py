@@ -2,6 +2,28 @@
 # Test Processing II  #
 #######################
 
+digit_to_int = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
+
+
+# 65~90, 97~122
+
+def is_upper(input_chr):
+    if 65<=ord(input_chr) and ord(input_chr)<=90:
+        return True
+    return False
+
+
+def is_lower(input_chr):
+    if 97<=ord(input_chr) and ord(input_chr)<=122:
+        return True
+    return False
+
+
+def is_letter(input_chr):
+    if is_upper(input_chr) or is_lower(input_chr):
+        return True
+    return False
+
 
 def digits_to_words(input_string):
     """
@@ -28,7 +50,15 @@ def digits_to_words(input_string):
             >>> tp2.digits_to_words(digits_str2)
             'three one four one five'
     """
-    digit_string = None
+    digit_string = ''
+    for i in input_string:
+        tmp_code = ord(i) - ord('0')
+        if 0<=tmp_code and tmp_code<10 :
+            digit_string += digit_to_int[tmp_code]
+            digit_string += ' '
+    if len(digit_string)>0:
+        if digit_string[-1]==' ':
+            digit_string = digit_string[:-1]
     return digit_string
 
 
@@ -64,5 +94,43 @@ def to_camel_case(underscore_str):
             >>> tp2.to_camel_case(underscore_str3)
             "alreadyCamel"
     """
-    camelcase_str = None
+    camelcase_str = ''
+    cnt = 0
+    for i in underscore_str :
+        if i == '_':
+            cnt += 1
+    if cnt == 0 :
+        if len(underscore_str)>0 :
+            if is_upper(underscore_str[0]) :
+                underscore_str = chr(ord(underscore_str[0])+32) + underscore_str[1:]
+        return underscore_str
+    idx = 0
+    before_underscore = False
+    for i in range(len(underscore_str)) :
+        if underscore_str[i] != '_' :
+            idx = i
+            break
+    
+    while idx<len(underscore_str) :
+        if underscore_str[idx]=='_' :
+            before_underscore = True
+            idx += 1
+            continue
+
+        if before_underscore :
+            if is_lower(underscore_str[idx]) :
+                camelcase_str += chr(ord(underscore_str[idx])-32)
+            else :
+                camelcase_str += underscore_str[idx]
+            before_underscore = False
+            idx += 1
+            continue
+        else :
+            if is_upper(underscore_str[idx]) :
+                camelcase_str += chr(ord(underscore_str[idx])+32)
+            else :
+                camelcase_str += underscore_str[idx]
+            before_underscore = False
+            idx += 1
+            continue
     return camelcase_str
